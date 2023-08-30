@@ -12,4 +12,4 @@ The data is available at https://physionet.org/content/apnea-ecg/1.0.0/
 # Our performance setups
 Run in Google Colab T4-GPU with High RAM, Python==3.10.12, Keras==2.12.0, and TensorFlow==2.12.0
 # Email
-If you have any question, please email to: 2hieu.nx@vinuni.edu.vn
+If you have any question, please email to: 21hieu.nx@vinuni.edu.vn
