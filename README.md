@@ -10,4 +10,4 @@ The data is available at https://physionet.org/content/apnea-ecg/1.0.0/
 3. Per-segment classfication: With the preprocessing data run with different architecture: LeNet-5_model.ipynb, SE-MSCNN_model.ipynb, BAFNET_model.ipynb.
 4. Per-recording classification: After have the csv file in steps 3 run file test_per_recording.ipynb to got the result. The result display in Table3.csv
 # Our performance setups
-Google Colab T4GPU with High Ram, Python==3.10.12, Keras==2.12.0, and TensorFlow==2.12.0
+Run in Google Colab T4-GPU with High RAM, Python==3.10.12, Keras==2.12.0, and TensorFlow==2.12.0
