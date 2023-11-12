@@ -1,15 +1,41 @@
-# MPCNNs-A-Novel-Matrix-Profile-based-CNNs-Approach-for-Sleep-Apnea-Classification
-# Abstract
-Sleep apnea (SA) is a significant respiratory condition that poses a major global health challenge. Accurate detection of sleep apnea episodes is crucial for prompt therapies and enhanced patient outcomes. Previous studies have investigated several machine and deep learning models in order to assess the efficacy of electrocardiogram (ECG)- based SA diagnoses. Despite these advancements, conventional feature extractions derived from electrocardiogram (ECG) signals, such as R-peaks and RR intervals, may fail to capture crucial information encompassed within the complete PQRST segments. In this study, we introduce a method that aims to bridge this diagnostic gap by delving deeper into the comprehensive segments of the ECG signal. Our approach was inspired by the distance information in Matrix Profile algorithms. The algorithms generate a Euclidean distance profile from a set of subsequences of fixed-length signals. From this, we derived the Min Distance Profile (MinDP), Max Distance Profile (MaxDP), and Mean Distance Profile (MeanDP) based on the minimum, maximum, and mean of the profile distances, respectively. To validate the performance, we employ the LeNet-5 architecture as the primary CNN model. To assess the robustness of this performance, we also conduct tests using two distinct lightweight models, namely BAFNet and SE-MSCNN. Our experimental results on the PhysioNet Apnea-ECG dataset revealed that with our novel feature extraction method, we achieved a per-segment accuracy up to 92.11 \% and a per-recording accuracy of 100\%, along with the highest correlation value of 0.989. By introducing a new feature extraction method based on distance relationships, we enhanced the performance of certain lightweight models, showing potential for home sleep apnea test (HSAT) and SA detection in IoT devices. 
-![overall](https://github.com/sportsengineeringvn/MPCNNs-A-Novel-Matrix-Profile-based-CNNs-Approach-for-Sleep-Apnea-Classification/assets/104493696/77d50d20-048e-40ec-8878-8947d55451e6)
-# Dataset
-The data is available at https://physionet.org/content/apnea-ecg/1.0.0/
-# Usage
-1. Dowload the data from the above website.
-2. Run the preprocessing file to get the file pkl (T1 is the highest performance). Please read the paper to understand abaout the design of T1,T2,T3 and T4.
-3. Per-segment classfication: With the preprocessing data run with different architecture: LeNet-5_model.ipynb, SE-MSCNN_model.ipynb, BAFNET_model.ipynb.
-4. Per-recording classification: After have the csv file in steps 3 run file test_per_recording.ipynb to got the result. The result display in Table3.csv
-# Our performance setups
-Run in Google Colab T4-GPU with High RAM, Python==3.10.12, Keras==2.12.0, and TensorFlow==2.12.0
+# MPCNN-Sleep-Apnea
+We propose MPCNN, a novel feature extraction method for single-lead ECG analysis in apnea classification. Specifically, our approach is inspired by Matrix Profile (MP) algorithms, which utilize fixed-length subsequence distance profiles to capture critical features in the PQRST segment of an ECG signal. We extracted MinDP, MaxDP, and MeanDP values from these distance profiles to serve as inputs for CNN models. We compared this new feature extraction approach with conventional methods, such as R-peaks and RR intervals, in various experiments. Our results demonstrate that our technique has significant potential and efficacy for SA classification, delivering promising per-segment and per-recording performance metrics.
+![First_draft_overall](https://github.com/vinuni-vishc/MPCNN-Sleep-Apnea/assets/104493696/b3e5b8b4-562e-4e98-b4e1-05911aa48411)
+The overall of our proposed SA detecion. (1) Reducing noise and artifacts. (2) Our main contribution in this paper, where we generate a series of subsequences $T_{P_i,m}$, start at a P Peak and spanning a window of length $m$. Subsequently, we calculate the Euclidean distance $d_{i,j}$ to compile a distance profile $D$, from which we extract critical values: $X_{min}$ (MinDP), $X_{max}$ (MaxDP), and $X_{mean}$ (MeanDP). These values serve as inputs for the subsequent modeling stage. (3) Data split in two categories (4) We use some lightweight models to perform the result in per-segment and per-recording classification.
+# Preparations
+## Dataset
+The data is available at [Apnea-ECG Database](https://physionet.org/content/apnea-ecg/1.0.0/). Please download and extract the file to `dataset`.
+## Downloading dependencies
+```
+Python 3.10.12
+Keras 2.12.0
+TensorFlow 2.12.0
+```
+# Preprocessing
+Please run the file `preprocessing.py` to extract the data for CNN's input. In our method, we also design ablation study with show as below: 
+![window_size](https://github.com/vinuni-vishc/MPCNN-Sleep-Apnea/assets/104493696/02acff41-19a6-4859-bc3d-254694af24fb)
+
+The design of the ablation studys with different window size. 
+
+$T_1$: From P peak to the end of ST segment. 
+
+$T2$: From P peak to the end of QRS segment. 
+
+$T3$: Q peaks to the end of ST segment. 
+
+$T4$: QRS segment.
+
+Read the comment in `preprocessing.py` to get the file data for each situation. $T_1$ is the case that achieved the highest performance. The extracted file has the '.pkl' format.
+
+# Deep Learning evaluation
+
+## Per-recording classification
+After preprocessing, we will test our method using three different deep learning architectures: modified LeNet-5, BAFNet, and SEMSCNN. Please refer to the paper for more information about each model. The performance was evaluated on Google Colab, and the files are in the ".ipynb" format. Change the filename from ".pkl" to test the results for each dataset (from $T_1$ to $T_4$). There are three files including: `BAFNET_model.ipynb`, `LeNet5_model.ipynb`, and `SE-MSCNN_model.ipynb`. Additionally, read the comments in each file to understand how to modify the code to conduct other experiments to test the effectiveness of each term in the feature extraction process of MPCNN: MinDP, MaxDP, and MeanDP (from $M_1$ to $M_7$).
+
+![Screenshot 2023-11-12 162043](https://github.com/vinuni-vishc/MPCNN-Sleep-Apnea/assets/104493696/76de8b69-31a8-4306-bc28-aa51d2e22a1f)
+
+## Per-segment classification
+After finishing the per-recording classification and extracting the CSV file, go to `test_per_recording.py` and enter the name of the '.csv' file as instructed in the comments to obtain the results of the per-segment classification.
+
 # Email
-If you have any question, please email to: 21hieu.nx@vinuni.edu.vn
+If you have any question, please don't hesitate to contact me at 21hieu.nx@vinuni.edu.vn
